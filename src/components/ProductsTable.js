@@ -1,26 +1,29 @@
 import React from 'react'
 import AddProduct from '../containers/AddProduct'
+import Product from './Product'
 
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 import Paper from 'material-ui/Paper';
 
-const styles = {
+const styles = theme => ({
   root: {
     width: '100%',
     overflowX: 'auto',
+    marginTop: theme.spacing.unit * 3,
   },
   table: {
     minWidth: 700,
   },
-}
+})
 
-export const ProductsTable = ({ products }) => (
+export const ProductsTable = ({ classes, products, onProductClick }) => (
+
   	<div>
   		<AddProduct />
-	    <Paper className={styles.root}>
-	      <Table className={styles.table}>
+	    <Paper className={classes.root}>
+	      <Table className={classes.table}>
 	        <TableHead>
 	          <TableRow>
 	            <TableCell>ID</TableCell>
@@ -32,12 +35,7 @@ export const ProductsTable = ({ products }) => (
 	        <TableBody>
 	          {products.map(n => {
 	            return (
-	              <TableRow key={n.id}>
-	                <TableCell>{n.id}</TableCell>
-	                <TableCell>{n.name}</TableCell>
-	                <TableCell>{n.brand}</TableCell>
-	                <TableCell>{n.verified}</TableCell>
-	              </TableRow>
+	            	<Product key={n.id} {...n} onClick={() => onProductClick(n.id)}/>
 	            );
 	          })}
 	        </TableBody>
@@ -47,6 +45,7 @@ export const ProductsTable = ({ products }) => (
 )
 
 ProductsTable.propTypes = {
+	classes: PropTypes.object.isRequired,
 	products: PropTypes.arrayOf(
 		PropTypes.shape({
 			id: PropTypes.number.isRequired,
@@ -55,4 +54,8 @@ ProductsTable.propTypes = {
 			brand: PropTypes.string.isRequired
 		}).isRequired
 	).isRequired,
+	onProductClick: PropTypes.func.isRequired
+	/*requerer onclick para o product verify*/
 }
+
+export default withStyles(styles)(ProductsTable)

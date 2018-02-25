@@ -146,7 +146,7 @@ class App extends React.Component {
           </Hidden>
           <main className={classes.content}>
             {
-		          this.state.currentView === 'ProductsManagement' ? <ProductsManagement /> :
+		          this.state.currentView === 'ProductsManagement' ? <ProductsManagement classes={classes}/> :
 		          this.state.currentView === 'DataVisualization' ? <div>
 		                                                            <ProductsMenu />
 		                                                            <VisibleProductsChart />

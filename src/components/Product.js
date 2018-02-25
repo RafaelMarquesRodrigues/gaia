@@ -1,23 +1,38 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { TableCell,TableRow } from 'material-ui/Table';
+import { withStyles } from 'material-ui/styles';
+import Button from 'material-ui/Button';
 
-const Product = ({ onClick, id, name, brand, verified }) => (
-  <li>
-    <div onClick={onClick}>
-      <h1>product {id}</h1>
-      <ul>
-        <li>{name}</li>
-        <li>{brand}</li>
-        <li>{verified === true ? 'true' : 'false'}</li>
-      </ul>
-    </div>
-  </li>
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+  },
+  input: {
+    display: 'none',
+  },
+});
+
+export const Product = ({ classes, onClick, id, name, brand, verified }) => (
+  <TableRow key={id} onClick={onClick}>
+    <TableCell>{id}</TableCell>
+    <TableCell>{name}</TableCell>
+    <TableCell>{brand}</TableCell>
+    <TableCell>
+      <Button variant={verified ? "flat" : "raised"} 
+              color={verified ? "primary" : "secondary"}
+              className={classes.button}>
+        {verified ? "Verified !" : "Verify"}
+      </Button>
+    </TableCell>
+  </TableRow>
 )
 
 Product.propTypes = {
+  classes: PropTypes.object.isRequired,
   name: PropTypes.string.isRequired,
   brand: PropTypes.string.isRequired,
   verified: PropTypes.bool.isRequired
 }
 
-export default Product
+export default withStyles(styles)(Product)

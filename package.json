@@ -25,5 +25,17 @@
     "material-icons-react": "^1.0.0",
     "recharts": "^1.0.0-beta.10",
     "redux-devtools": "^3.4.1"
-  }
+  },
+  "description": "Gaia Admin Interface",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RafaelMarquesRodrigues/gaia.git"
+  },
+  "author": "Rafael Marques Rodrigues",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RafaelMarquesRodrigues/gaia/issues"
+  },
+  "homepage": "https://github.com/RafaelMarquesRodrigues/gaia#readme"
 }
