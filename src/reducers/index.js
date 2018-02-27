@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux'
 import products from './products'
-import visibilityFilter from './visibilityFilter'
+import productsFilter from './productsFilter'
+import productsList from './productsList'
 
 const gaiaApp = combineReducers({
 	products,
-	visibilityFilter
+	productsFilter,
+	productsList
 })
 
 export default gaiaApp

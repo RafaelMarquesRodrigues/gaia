@@ -4,7 +4,8 @@ import { addProduct } from '../actions'
 
 import '../css/ProductForm.css'
 import 'material-ui/TextField'
-import '../components/Product'
+
+import * as firebase from 'firebase'
 
 let AddProduct = ({ dispatch }) => {
   let name
@@ -25,9 +26,15 @@ let AddProduct = ({ dispatch }) => {
           console.log(amount.value)
         }
           
-          while(amount.value-- !== 0){
-            dispatch(addProduct(name.value, brand.value))
-          }
+          //let ref = firebase.database().ref('products')
+          
+          //ref.on('value', snapshot => {
+            
+          //let ref = firebase.databse().ref('messages').push()
+
+            while(amount.value-- !== 0){
+              dispatch(addProduct(name.value, brand.value))
+            }
 
           amount.value = ''
           name.value = ''

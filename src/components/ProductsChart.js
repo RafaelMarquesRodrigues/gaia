@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Product from './Product'
 
 import { BarChart, XAxis, YAxis, Bar} from 'recharts'
 
@@ -17,7 +16,8 @@ const groupBy = (array, groupFilter, groupAttr) => {
 		}
 	})
 
-	products.forEach(product => product[groupAttr] = groupSize[groupFilter(product)] )
+	products.forEach(product => product[groupAttr] = groupSize[groupFilter(product)])
+
 	console.log(products)
 	return products
 }
@@ -39,7 +39,7 @@ export const ProductsChart = ({ products, onProductClick }) => (
 ProductsChart.propTypes = {
 	products: PropTypes.arrayOf(
 		PropTypes.shape({
-			id: PropTypes.number.isRequired,
+			id: PropTypes.string.isRequired,
 			verified: PropTypes.bool.isRequired,
 			name: PropTypes.string.isRequired,
 			brand: PropTypes.string.isRequired

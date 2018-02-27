@@ -1,6 +1,6 @@
 import React from 'react'
 import AddProduct from '../containers/AddProduct'
-import Product from './Product'
+import TableProduct from './TableProduct'
 
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
@@ -35,7 +35,7 @@ export const ProductsTable = ({ classes, products, onProductClick }) => (
 	        <TableBody>
 	          {products.map(n => {
 	            return (
-	            	<Product key={n.id} {...n} onClick={() => onProductClick(n.id)}/>
+	            	<TableProduct key={n.id} {...n} onClick={() => onProductClick(n.id)}/>
 	            );
 	          })}
 	        </TableBody>
@@ -48,7 +48,7 @@ ProductsTable.propTypes = {
 	classes: PropTypes.object.isRequired,
 	products: PropTypes.arrayOf(
 		PropTypes.shape({
-			id: PropTypes.number.isRequired,
+			id: PropTypes.string.isRequired,
 			verified: PropTypes.bool.isRequired,
 			name: PropTypes.string.isRequired,
 			brand: PropTypes.string.isRequired

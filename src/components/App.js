@@ -10,12 +10,11 @@ import Hidden from 'material-ui/Hidden';
 import Divider from 'material-ui/Divider';
 import MenuIcon from 'material-ui-icons/Menu';
 
-import ProductsManagement from '../containers/ProductsManagement'
+import ProductsTableConnector from '../containers/ProductsTableConnector'
 
 import List, { ListItem, ListItemText } from 'material-ui/List';
 
-import ProductsMenu from './ProductsMenu'
-import VisibleProductsChart from '../containers/VisibleProductsChart'
+import ProductsChartConnector from '../containers/ProductsChartConnector'
 
 import '../css/App.css'
 
@@ -146,12 +145,8 @@ class App extends React.Component {
           </Hidden>
           <main className={classes.content}>
             {
-		          this.state.currentView === 'ProductsManagement' ? <ProductsManagement classes={classes}/> :
-		          this.state.currentView === 'DataVisualization' ? <div>
-		                                                            <ProductsMenu />
-		                                                            <VisibleProductsChart />
-		                                                            asdadas
-		                                                           </div> :
+		          this.state.currentView === 'ProductsManagement' ? <ProductsTableConnector classes={classes}/> :
+		          this.state.currentView === 'DataVisualization' ? <ProductsChartConnector /> :
 		          <h1>simple</h1>
 		        }
           </main>
