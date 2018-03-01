@@ -1,8 +1,6 @@
 import React from 'react'
-import AddProduct from '../containers/AddProduct'
 import TableProduct from './TableProduct'
-
-import PropTypes from 'prop-types';
+import * as firebase from 'firebase'
 import { withStyles } from 'material-ui/styles';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 import Paper from 'material-ui/Paper';
@@ -18,10 +16,10 @@ const styles = theme => ({
   },
 })
 
-export const ProductsTable = ({ classes, products, onProductClick }) => (
 
+
+const ProductsTable = ({ classes, products, onClick }) => (
   	<div>
-  		<AddProduct />
 	    <Paper className={classes.root}>
 	      <Table className={classes.table}>
 	        <TableHead>
@@ -29,13 +27,14 @@ export const ProductsTable = ({ classes, products, onProductClick }) => (
 	            <TableCell>ID</TableCell>
 	            <TableCell>Name</TableCell>
 	            <TableCell>Brand</TableCell>
+	            <TableCell>Added at</TableCell>
 	            <TableCell>Verified</TableCell>
 	          </TableRow>
 	        </TableHead>
 	        <TableBody>
 	          {products.map(n => {
 	            return (
-	            	<TableProduct key={n.id} {...n} onClick={() => onProductClick(n.id)}/>
+	            	<TableProduct key={n.id} {...n} onClick={onClick}/>
 	            );
 	          })}
 	        </TableBody>
@@ -43,19 +42,5 @@ export const ProductsTable = ({ classes, products, onProductClick }) => (
 	    </Paper>
 	  </div>
 )
-
-ProductsTable.propTypes = {
-	classes: PropTypes.object.isRequired,
-	products: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.string.isRequired,
-			verified: PropTypes.bool.isRequired,
-			name: PropTypes.string.isRequired,
-			brand: PropTypes.string.isRequired
-		}).isRequired
-	).isRequired,
-	onProductClick: PropTypes.func.isRequired
-	/*requerer onclick para o product verify*/
-}
 
 export default withStyles(styles)(ProductsTable)

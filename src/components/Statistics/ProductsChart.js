@@ -7,7 +7,7 @@ const groupBy = (array, groupFilter, groupAttr) => {
 	let products = []
 	let groupSize = []
 
-	array.forEach(product => {
+	array.slice().forEach(product => {
 		if(products.filter(p => groupFilter(product) === groupFilter(p)).length === 0){
 			groupSize[groupFilter(product)] = 1
 			products.push(product)
@@ -22,28 +22,17 @@ const groupBy = (array, groupFilter, groupAttr) => {
 	return products
 }
 
-const productsByName = (array) => groupBy(array, (p) => p.name, 'amount')
+const productsByType = (array) => groupBy(array, (p) => p.type, 'amount')
 
-export const ProductsChart = ({ products, onProductClick }) => (
-
+const ProductsChart = ({ products }) => (
 	<ul>
-		<BarChart width={600} height={300} data={productsByName(products)}>
-	  <XAxis dataKey="name" />
+		<BarChart width={500} height={300} data={productsByType(products)}>
+	  <XAxis dataKey="type" />
 	  <YAxis />
 	  <Bar type="monotone" dataKey="amount" barSize={30} fill="#8884d8"
-	    label="test"/>
+	    label="Products chart"/>
 	</BarChart>
 	</ul>
 )
 
-ProductsChart.propTypes = {
-	products: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.string.isRequired,
-			verified: PropTypes.bool.isRequired,
-			name: PropTypes.string.isRequired,
-			brand: PropTypes.string.isRequired
-		}).isRequired
-	).isRequired,
-	onProductClick: PropTypes.func.isRequired
-}
+export default ProductsChart
