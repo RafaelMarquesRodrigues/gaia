@@ -1,23 +1,10 @@
 
-import React, { Component } from 'react'
-
+import React, { Component, Fragment } from 'react'
 import ProductsChart from './ProductsChart'
-
 import * as firebase from 'firebase'
-
-import { withStyles } from 'material-ui/styles'
 import Paper from 'material-ui/Paper'
-import Typography from 'material-ui/Typography'
 
-const styles = theme => ({
-  root: theme.mixins.gutters({
-    paddingTop: 16,
-    paddingBottom: 16,
-    marginTop: theme.spacing.unit * 3,
-  }),
-})
-
-class StatisticsView extends Component {
+export default class StatisticsView extends Component {
 	
 	constructor(props){
 		super(props)
@@ -29,8 +16,9 @@ class StatisticsView extends Component {
 	}
 
 	componentDidMount(){
-		let listener = firebase.firestore().collection('products')
-		.orderBy("addedAt", "desc")
+		let listener = firebase.firestore()
+		.collection('products')
+		.orderBy("addedAt", "asc")
 		.onSnapshot(snapshot => {
 			let products = []
 				
@@ -61,19 +49,13 @@ class StatisticsView extends Component {
 		if(!this.state.products){
 			return (
 				<div>
-					<Paper className={classes.root} elevation={4}>
-					</Paper>
 				</div>
 			)
 		}
 		return (
-			<div>
-					<Paper className={classes.root} elevation={4}>
-						<ProductsChart products={this.state.products}/>
-					</Paper>
-			</div>
+			<Fragment>
+				<ProductsChart products={this.state.products}/>
+			</Fragment>
 		)
 	}
 }
-
-export default withStyles(styles, { withTheme: true })(StatisticsView)

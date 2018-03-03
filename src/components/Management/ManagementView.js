@@ -1,25 +1,15 @@
 
-import React, { Component } from 'react'
-import { withStyles } from 'material-ui/styles'
-import Paper from 'material-ui/Paper'
-import Typography from 'material-ui/Typography'
-import PropTypes from 'prop-types'
+import React, { Component, Fragment } from 'react'
 
-import AddProduct from './AddProduct'
-import ProductsTable from './ProductsTable'
+// firebase
 import * as firebase from 'firebase'
 import 'firebase/firestore'
 
-const styles = theme => ({
-  root: theme.mixins.gutters({
-    paddingTop: 16,
-    paddingBottom: 16,
-    marginTop: theme.spacing.unit * 3,
-  }),
-})
+// management components
+import ProductsTable from './ProductsTable'
+import TableSearch from './TableSearch'
 
-
-class ManagementView extends Component {
+export default class ManagementView extends Component {
 	
 	constructor(props){
 		super(props)
@@ -65,25 +55,19 @@ class ManagementView extends Component {
 
 	render() {
 		const { classes } = this.props
-		
+
 		if(!this.state.products){
 			return (
-				<div>
-					<Paper className={classes.root} elevation={4}>
-						<AddProduct />
-					</Paper>
-				</div>
+				<Fragment>
+					<TableSearch />
+				</Fragment>
 			)
 		}
 		return (
-			<div>
-				<Paper className={classes.root} elevation={4}>
-					<AddProduct />
-					<ProductsTable classes={this.classes} products={this.state.products} onClick={this.verifiyProduct}/>
-				</Paper>
-			</div>
+			<Fragment>
+				<TableSearch />
+				<ProductsTable products={this.state.products} onClick={this.verifiyProduct}/>
+			</Fragment>
 		)
 	}
 }
-
-export default withStyles(styles, { withTheme: true })(ManagementView)

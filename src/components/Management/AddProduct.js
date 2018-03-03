@@ -1,22 +1,20 @@
-import React from 'react'
-import 'material-ui/TextField'
-import { withStyles } from 'material-ui/styles'
+import React, { Component } from 'react'
+//import 'material-ui/TextField'
 import * as firebase from 'firebase'
 import 'firebase/firestore'
-import Paper from 'material-ui/Paper'
 
-const styles = theme => ({
-  root: theme.mixins.gutters({
-    paddingTop: 16,
-    paddingBottom: 16,
-    marginTop: theme.spacing.unit * 3,
-  }),
-})
+import { TextField, Button } from 'material-ui'
 
-class AddProduct extends React.Component {
-  
-  constructor(props){
-    super(props)
+//import TextField from 'material-ui/TextField';
+//import Button from 'material-ui/Button';
+import AddIcon from 'material-ui-icons/Add';
+
+export default class AddProduct extends React.Component {
+
+  state = {
+    type: '',
+    brand: '',
+    amount: ''
   }
 
   addToDb(type, brand) {
@@ -25,8 +23,8 @@ class AddProduct extends React.Component {
     //console.log(Date.now())
     doc.set({
       id: doc.id,
-      type: type.value,
-      brand: brand.value,
+      type: type,
+      brand: brand,
       verified: false,
       addedAt: firebase.firestore.FieldValue.serverTimestamp()
     })
@@ -34,57 +32,68 @@ class AddProduct extends React.Component {
     .catch((err) => console.log('error adding product ' + err))
   }
 
-  render(){
-    let type = ''
-    let brand = ''
-    let amount = ''
-    const { classes } = this.props
+  handleChange = option => event => {
+    this.setState({
+      [option]: event.target.value,
+    });
+  };
 
+  render(){
     return (
-      <Paper className={classes.root} elevation={4}>
         <form onSubmit={e => {
             e.preventDefault()
 
-            if((type.value && brand.value) && 
-              (!type.value.trim() || !brand.value.trim())){
+            if((this.state.type && this.state.brand) && 
+              (!this.state.type.trim() || !this.state.brand.trim())){
               return
             }
-            if(!amount.value){
-              amount.value = 1
+            if(!this.state.amount){
+              this.state.amount = 1
             }
             
 
-            while(amount.value-- !== 0){
-              this.addToDb(type, brand)
+            while(this.state.amount-- !== 0){
+              this.addToDb(this.state.type, this.state.brand)
             }
 
-            amount.value = ''
-            type.value = ''
-            brand.value = ''
+            this.setState({
+              amount: '',
+              type: '',
+              brand: '',
+            })
+
           }}
         >
-          <input
-            ref={node => {
-              type = node
-            }}
+        <div>
+          <TextField
+            id="with-placeholder"
+            label="Product type"
+            placeholder="Required*"
+            margin="normal"
+            value={this.state.type}
+            onChange={this.handleChange('type')}
           />
-          <input
-            ref={node => {
-              brand = node
-            }}
+          <TextField
+            id="with-placeholder"
+            label="Product brand"
+            placeholder=""
+            margin="normal"
+            value={this.state.brand}
+            onChange={this.handleChange('brand')}
           />
-          <input
-            ref={node => {
-              amount = node
-            }}
+          <TextField
+            id="amoun"
+            label="Amount"
+            //placeholder="Amount"
+            margin="normal"
+            value={this.state.amount}
+            onChange={this.handleChange('amount')}
           />
-          <button type="submit">
-            add
-          </button>
-        </form>
-      </Paper>
+          <Button type="submit" variant="fab" mini color="secondary" aria-label="add">
+          <AddIcon />
+        </Button>
+        </div>
+      </form>
     )
   }
 }
-
-export default withStyles(styles, { withTheme: true })(AddProduct)

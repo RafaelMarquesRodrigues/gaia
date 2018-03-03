@@ -4,7 +4,6 @@ import './css/index.css'
 import App from './components/App'
 import registerServiceWorker from './registerServiceWorker'
 //import 'firebase/firestore'
-import Reboot from 'material-ui/Reboot';
 
 import * as firebase from 'firebase'
 
@@ -20,7 +19,6 @@ firebase.initializeApp(config)
 
 ReactDOM.render(
 		<div>
-			<Reboot />
 			<App/>
 		</div>, document.getElementById('root'))
 

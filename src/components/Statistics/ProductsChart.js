@@ -26,7 +26,7 @@ const productsByType = (array) => groupBy(array, (p) => p.type, 'amount')
 
 const ProductsChart = ({ products }) => (
 	<ul>
-		<BarChart width={500} height={300} data={productsByType(products)}>
+		<BarChart width={450} height={250} data={productsByType(products)}>
 	  <XAxis dataKey="type" />
 	  <YAxis />
 	  <Bar type="monotone" dataKey="amount" barSize={30} fill="#8884d8"
