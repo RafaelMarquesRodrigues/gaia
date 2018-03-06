@@ -1,16 +1,15 @@
 {
-  "name": "gaia-app",
+  "name": "item-voting",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "firebase": "^4.6.2",
-    "material-ui": "^1.0.0-beta.34",
-    "material-ui-icons": "^1.0.0-beta.17",
+    "babel-plugin-recharts": "^1.1.1",
+    "firebase": "^4.10.1",
+    "npm": "^5.7.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-redux": "^5.0.7",
     "react-scripts": "1.1.1",
-    "redux": "^3.7.2"
+    "recharts": "^1.0.0-beta.10"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -18,24 +17,21 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "devDependencies": {
-    "babel-preset-latest": "^6.24.1",
-    "eslint": "^4.18.1",
-    "eslint-plugin-react": "^7.7.0",
-    "material-icons-react": "^1.0.0",
-    "recharts": "^1.0.0-beta.10",
-    "redux-devtools": "^3.4.1"
-  },
-  "description": "Gaia Admin Interface",
+  "description": "Voting app for product acquirement",
   "main": "index.js",
+  "devDependencies": {
+    "babel-preset-env": "^1.6.1",
+    "material-ui": "^1.0.0-beta.35",
+    "webpack": "^3.11.0"
+  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RafaelMarquesRodrigues/gaia.git"
+    "url": "git+https://github.com/RafaelMarquesRodrigues/item-voting.git"
   },
   "author": "Rafael Marques Rodrigues",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/RafaelMarquesRodrigues/gaia/issues"
+    "url": "https://github.com/RafaelMarquesRodrigues/item-voting/issues"
   },
-  "homepage": "https://github.com/RafaelMarquesRodrigues/gaia#readme"
+  "homepage": "https://github.com/RafaelMarquesRodrigues/item-voting#readme"
 }
