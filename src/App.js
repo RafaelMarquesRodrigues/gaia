@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
-import './styles/App.css';
-import ItemList from './components/ItemList'
-import AddItem from './components/AddItem'
-import Chart from './components/Chart'
-import ItemDetails from './components/ItemDetails'
-import Slide from 'material-ui/transitions/Slide';
-import { Button, Switch, FormControlLabel } from 'material-ui'
 
-import { Grid, AppBar, Toolbar, Typography, Paper } from 'material-ui'
+import ChartView from './components/ChartView/ChartView'
+import ItemView from './components/ItemView/ItemView'
+import { updateItem, searchByField, search, listenToCollection, addToCollection } from './components/api'
 
-import * as firebase from 'firebase'
+import { Button, AppBar, Toolbar, Typography } from 'material-ui'
+
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
+
 import 'firebase/firestore'
 
 class App extends Component {
@@ -20,38 +22,30 @@ class App extends Component {
     this.state = {
       data: null,
       unsubscribe: null,
-      currentItem: null,
+      currentItemId: null,
+      currentSearchItems: null,
       showDetails: false,
       filterChecked: false,
       filter: f => true
     }
 
     this.addItem = this.addItem.bind(this)
-    this.voteOnItem = this.voteOnItem.bind(this)
     this.showDetails = this.showDetails.bind(this)
     this.verifyItem = this.verifyItem.bind(this)
+    this.searchItem = this.searchItem.bind(this)
     this.handleItemFilter = this.handleItemFilter.bind(this)
   }
 
   componentDidMount(){
-    let listener = firebase.firestore().collection('products').onSnapshot(snapshot => {
-      let products = []
-        
-      snapshot.forEach(doc => {
-        products.push(doc.data())
-      })
-
+    let listener = listenToCollection('products', products => {
       this.setState({
         data: products
       })
     }, err => console.log(err))
 
-    console.log(this.state.data)
-
     this.setState({
       unsubscribe: listener
     })
-
   }
 
   componentWillUnmount(){
@@ -59,68 +53,38 @@ class App extends Component {
   }
 
   verifyItem(id) {
-    console.log(id)
-    firebase.firestore().collection('products').doc(id).update({
-      verified: true
-    })
+    updateItem('products', id, {'verified': true})
     .catch(err => console.log(err))
   }
 
-  addItem(_type, _brand){
-
-    let doc = firebase.firestore().collection('products').doc()
-
-    doc.set({
-      id: doc.id,
-      type: _type,
-      brand: _brand,
-      verified: false,
-      votes: 0,
-      addedAt: firebase.firestore.FieldValue.serverTimestamp()
-    })
+  addItem(type, brand){
+    addToCollection('products', type, brand)
     .then(() => console.log('added !test'))
     .catch((err) => console.log('error adding product ' + err))
-
-  }
-
-  voteOnItem(id){
-    if(!id){
-      console.log("Item ID not provided")
-      return
-    }
-
-    let item = this.state.data.slice().find(n => n.id === id)
-
-    if(!item){
-      console.log("Item does not exist")
-      return
-    }
-
-    console.log(item)
-
-    firebase.firestore().collection('products').doc(item.id).update({
-      votes: item.votes + 1
-    })
-    .catch(err => console.log(err))
   }
 
   searchItem(id){
-    let items = this.state.data.filter(n => n.id === id)
+    searchByField('products', 'id', id).then(snapshot => {
+      let items = []
 
-    this.setState({
-      currentSearchItems: items.length > 0 ? items : null,
-    })
+      snapshot.forEach(doc => items.push(doc.data()))
 
+        this.setState({
+          currentSearchItems: items && items.length > 0 ? items : null,
+        })
+
+    }).catch(err => console.log(err))
   }
 
   showDetails(id){
-    let item = this.state.data.slice().find(n => n.id === id)
+    search('products', id).then(item => {
 
-    this.setState({
-      currentItem: item,
-      showDetails: true
-    })
-
+      this.setState({
+        currentItemId: item.data().id,
+        showDetails: true
+      })
+  
+    }).catch(err => console.log(err))
   }
 
   handleItemFilter(){
@@ -130,48 +94,52 @@ class App extends Component {
       filterChecked: !this.state.filterChecked,
       filter: checked ? f => f.verified === true : f => true
     })
-
   }
 
   render() {
     return (
-      <div className="App">
-          
-          <AppBar position="static" color="default" style={{marginBottom: 12}}>
+      <Router>
+        <div style={{overflow: 'hidden'}}>
+          <AppBar position="static" color="default" style={{marginBottom: 20}}>
             <Toolbar>
-              <Typography variant="title" color="inherit">
+              <Typography variant="title" color="inherit" style={{flex: 1}}>
                 item voting
               </Typography>
+              <Button style={{justify: 'flex-end'}} component={Link} to="/itemView">  home  </Button>
+              <Button style={{justify: 'flex-end'}} component={Link} to="/chartView">  chart  </Button>
             </Toolbar>
           </AppBar>
 
-        <Grid container spacing={16}>
-          <Grid item xs={6} lg={6}>
-            <Paper style={{padding: 10, margin: 5}}>
-              <AddItem onClick={this.addItem}/>
-            </Paper>
-            <Paper style={{padding: 10, margin: 5}}>
-              <ItemList items={this.state.data} onListItemClick={this.showDetails} onVoteClick={this.voteOnItem} onVerifyClick={this.verifyItem}/>
-            </Paper>
-          </Grid>
-          <Grid item xs={6} lg={6}>
-            <Paper style={{padding: 10, margin: 5}}>
-              <FormControlLabel control={
-                <Switch checked={this.state.filterChecked} onChange={this.handleItemFilter} value="verifyFilter" color="primary"/>
-              }
-              label="only verified"
-              />
-              <Chart data={this.state.data} filter={this.state.filter}/>
-            </Paper>
-            <Slide direction="right" in={this.state.showDetails} mountOnEnter unmountOnExit>
-              <Paper style={{padding: 10, margin: 5}}>
-                <ItemDetails item={this.state.currentItem} />
-              </Paper>
-            </Slide>
-          </Grid>
-        </Grid>
-      </div>
-    );
+          <Route path="/itemView"
+            render={() => {
+              return (
+                <ItemView addItem={this.addItem}
+                          data={this.state.data}
+                          showDetails={this.showDetails}
+                          verifyItem={this.verifyItem}
+                          searchItem={this.searchItem}
+                          currentItem={this.state.currentItemId ? 
+                                      this.state.data.find(n => n.id === this.state.currentItemId)
+                                      : null }
+                          currentSearchItems={this.state.currentSearchItems}/>
+                )
+            }}
+          />
+
+          <Route path="/chartView" 
+            render={() => {
+              return(
+                <ChartView filterChecked={this.state.filterChecked} 
+                           handleItemFilter={this.handleItemFilter}
+                           data={this.state.data} 
+                           filter={this.state.filter}/>
+                )
+            }}
+          />
+
+        </div>
+      </Router>
+    )
   }
 }
 
