@@ -18,6 +18,7 @@ export const addToCollection = (collection, type, brand) => {
 export const listenToCollection = (collection, _onSnapshot, onError) => {
     return firebase.firestore()
 	    .collection(collection)
+	    .orderBy("addedAt", "desc")
 	    .onSnapshot(snapshot => {
 	      let items = []
 	        

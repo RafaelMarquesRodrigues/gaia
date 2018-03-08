@@ -7,9 +7,12 @@ import registerServiceWorker from './registerServiceWorker';
 import * as firebase from 'firebase'
 
 var config = {
-  apiKey: "AIzaSyD69WN4UfT9yVlrGsuiRTM-1YkNgEgrqng",
-  authDomain: "gaia-prototype.firebaseapp.com",
-  projectId: "gaia-prototype",
+	apiKey: "AIzaSyAlLxL9EIUoxfnnCfaG37UDYz_yF8tMnUQ",
+    authDomain: "gaia-prototype-dev.firebaseapp.com",
+    databaseURL: "https://gaia-prototype-dev.firebaseio.com",
+    projectId: "gaia-prototype-dev",
+    storageBucket: "",
+    messagingSenderId: "477505729022"
 }
 
 firebase.initializeApp(config)

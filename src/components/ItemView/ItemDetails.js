@@ -16,6 +16,7 @@ const ItemDetails = ({item}) => {
 			<Typography variant="subheading">id: {item.id}</Typography>
 			<Typography variant="body2">type: {item.type}</Typography>
 			<Typography variant="body2">brand: {item.brand}</Typography>
+			<Typography variant="body2">addedAt: {item.addedAt.toString()}</Typography>
 			<Typography variant="button">verified: {item.verified ? "verified" : "not verified"}</Typography>
 		</Fragment>
 	)

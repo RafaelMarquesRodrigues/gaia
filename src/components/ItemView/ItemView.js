@@ -26,7 +26,7 @@ const ItemView = ({match, addItem, data, showDetails, verifyItem, searchItem, cu
             </Slide>
               <Paper style={{padding: 30, margin: 10}}>
                 <ItemSearch onSearchClick={searchItem} 
-                            currentSearchItems={currentSearchItems}/>
+                          currentSearchItems={currentSearchItems}/>
               </Paper>
           </Grid>
         </Grid>

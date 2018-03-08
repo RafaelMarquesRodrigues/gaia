@@ -1,6 +1,6 @@
 {
-  "short_name": "Voting App",
-  "name": "Item acquirement voting app",
+  "short_name": "Gaia Manager",
+  "name": "Gaia New Tech Product Manager",
   "start_url": "./index.html",
   "display": "standalone",
   "theme_color": "#000000",
