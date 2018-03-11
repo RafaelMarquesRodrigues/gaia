@@ -1,0 +1,7 @@
+export const SIGN_UP = '/signup'
+export const SIGN_IN = '/signin'
+export const PASSWORD_FORGET = '/pw-forget'
+export const HOME = '/home'
+export const ITEMS_VIEW = '/items'
+export const CHARTS_VIEW = '/charts'
+export const ACCOUNT = '/account'

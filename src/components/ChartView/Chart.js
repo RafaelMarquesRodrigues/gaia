@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { BarChart, Bar, XAxis, YAxis } from 'recharts'
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts'
 
 
 const formatData = (data, groupFilter, groupAttr, fieldFilter) => {
@@ -38,11 +38,13 @@ const Chart = ({data, filter}) => {
 
 	return (
 		<Fragment>
-			<BarChart width={600} height={300} data={productsByType(data, filter)}>
-			  <XAxis dataKey="type"/>
-			  <YAxis type="number" domain={[0, 20]}/>
-			  <Bar type="monotone" dataKey="amount" fill="#8884d8" animationEasing="ease-in"/>
-			</BarChart>
+			<ResponsiveContainer width={'90%'} height={300}>
+				<BarChart data={productsByType(data, filter)}>
+				  <XAxis dataKey="type"/>
+				  <YAxis type="number" domain={[0, 20]}/>
+				  <Bar type="monotone" dataKey="amount" fill="#8884d8" animationEasing="ease-in"/>
+				</BarChart>
+			</ResponsiveContainer>
 		</Fragment>
 	)
 }
