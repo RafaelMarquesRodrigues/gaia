@@ -50,7 +50,7 @@ class ChartView extends Component {
 						<Paper style={{textAlign: 'flex-start', padding: 30, margin: 5}}>
 							<Grid container direction="column" justify="space-between">
 								<Grid item>
-								    <FormControlLabel label="only verified" control={
+								    <FormControlLabel label=" Filter" control={
 								      	<Select onChange={this.handleChange('filterName')} 
 								      			value={this.state.filterName}>
 								      		<MenuItem value="all"> All </MenuItem>

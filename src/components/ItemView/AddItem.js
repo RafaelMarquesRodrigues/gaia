@@ -55,7 +55,7 @@ export default class AddItem extends React.Component {
                         onChange={this.handleChange('brand')}
                     />
                     <Button 
-                        type="submit" variant="raised" style={{background: deepOrange[400]}}>
+                        type="submit" variant="raised" style={{background: '#f9683a'}}>
                         Add  
                     </Button>
                 </div>

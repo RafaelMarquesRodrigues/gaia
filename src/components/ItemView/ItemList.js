@@ -4,7 +4,7 @@ import List from 'material-ui/List'
 
 const ItemList = ({items, onListItemClick, onVerifyClick}) => {
 	return (
-		<List style={{overflow: 'auto', maxHeight: 350}}>
+		<List style={{overflow: 'auto', maxHeight: window.innerHeight - 300}}>
 			{
 				items && items.slice()
 				.map(item => <Item key={item.id} {...item} 

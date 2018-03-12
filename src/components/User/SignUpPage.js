@@ -7,9 +7,10 @@ import {
 import * as routes from '../../constants/routes'
 import { auth, db } from '../../api'
 
+import { Paper, Grid, Button, TextField, Typography } from 'material-ui'
+
 const SignUpPage = ({ history }) =>
 	<div>
-		<h1> sign up </h1>
 		<SignUpForm history={history}/>
 	</div>
 
@@ -81,37 +82,54 @@ class SignUpForm extends Component {
 			username === ''
 
 		return (
-			<form onSubmit={this.onSubmit}>
-				<input
-					value={username}
-					onChange={event => this.setState(byPropKey('username', event.target.value))}
-					type="text"
-					placeholder="Full Name"
-				/>
-				<input
-					value={email}
-					onChange={event => this.setState(byPropKey('email', event.target.value))}
-					type="text"
-					placeholder="Email Adress"
-				/>
-				<input
-					value={passwordOne}
-					onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
-					type="password"
-					placeholder="Password"
-				/>
-				<input
-					value={passwordTwo}
-					onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
-					type="password"
-					placeholder="Confirm Password"
-				/>
-				<button disabled={isInvalid} type="submit">
-					Sign Up
-				</button>
+			<Grid container direction='column' justify='center' alignItems='center'>
+				<Paper style={{padding: 30}}>
+					<form onSubmit={this.onSubmit}>
+					<Grid container direction='column' justify='center' alignItems='center'>
+					<Typography variant="title">SignUp</Typography>
+						<Grid item>
+						<TextField
+							value={username}
+							onChange={event => this.setState(byPropKey('username', event.target.value))}
+							type="text"
+							placeholder="Full Name"
+						/>
+						</Grid>
+						<Grid item>
+						<TextField
+							value={email}
+							onChange={event => this.setState(byPropKey('email', event.target.value))}
+							type="text"
+							placeholder="Email Adress"
+						/>
+						</Grid>
+						<Grid item>
+						<TextField
+							value={passwordOne}
+							onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
+							type="password"
+							placeholder="Password"
+						/>
+						</Grid>
+						<Grid item>
+						<TextField
+							value={passwordTwo}
+							onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
+							type="password"
+							placeholder="Confirm Password"
+						/>
+						</Grid>
+						<Grid item>
+						<Button disabled={isInvalid} type="submit">
+							Sign Up
+						</Button>
+						</Grid>
 
-				{error && <p>{error.message}</p>}
-			</form>
+						{error && <p>{error.message}</p>}
+					</Grid>
+					</form>
+				</Paper>
+			</Grid>
 		)
 	}
 }

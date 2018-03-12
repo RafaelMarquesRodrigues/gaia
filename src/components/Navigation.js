@@ -7,7 +7,7 @@ import * as routes from '../constants/routes'
 
 import { Button, AppBar, Toolbar, Typography } from 'material-ui'
 
-import lime from 'material-ui/colors/lime'
+import lightGreen from 'material-ui/colors/lightGreen'
 
 const Navigation = (props, { authUser }) => {
 
@@ -24,7 +24,7 @@ const Navigation = (props, { authUser }) => {
 
 const styles = {
     appBar: {
-        background: lime['400'],
+        background: '#60ad5e',
         marginBottom: 10
     }
 }
@@ -34,7 +34,7 @@ const NavigationAuth = () =>
         <AppBar position="static" style={styles.appBar}>
             <Toolbar>
                 <Typography variant="title" color="inherit" style={{flex: 1}}>
-                    item voting
+                    Gaia New Tech
                 </Typography>
                 <Button style={{justify: 'flex-end'}} component={Link} to={routes.HOME}>  home  </Button>
                 <Button style={{justify: 'flex-end'}} component={Link} to={routes.ACCOUNT}>  account  </Button>
@@ -52,7 +52,7 @@ const NavigationNonAuth = () =>
         <AppBar position="static" style={styles.appBar}>
             <Toolbar>
                 <Typography variant="title" color="inherit" style={{flex: 1}}>
-                    item voting
+                    Gaia New Tech
                     </Typography>
     		    <Button style={{justify: 'flex-end'}} component={Link} to={routes.SIGN_IN}>  sign in  </Button>
         		<Button style={{justify: 'flex-end'}} component={Link} to={routes.SIGN_UP}>  sign up  </Button>
